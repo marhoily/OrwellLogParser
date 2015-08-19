@@ -16,5 +16,9 @@ before_build:
 cache:
   - packages -> **\packages.config
 
+after_build:
+  - 7z a logparser.zip %APPVEYOR_BUILD_FOLDER%\LogParser\bin\release\*.*
+
 artifacts:
-  - path: '**\LogParser\bin\release\*.*'
+  - path: logParser.zip
+    name: logParser
