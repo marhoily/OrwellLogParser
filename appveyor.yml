@@ -1,21 +1,21 @@
-version: 1.0.{build} 
+version: 1.0.{build}
 
-assembly_info: 
-  patch: true 
-  file: AssemblyInfo.* 
-  assembly_version: "{version}" 
-  assembly_file_version: "{version}" 
-  assembly_informational_version: "{version}" 
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
 
- configuration: 
-   - Release  
+configuration:
+  - Release
 
- before_build: 
-   nuget restore  
+before_build:
+  nuget restore
 
- cache: 
-   - packages -> **\packages.config  
+cache:
+  - packages -> **\packages.config
 
- artifacts: 
-   - path: '*.exe' 
- 
+artifacts:
+  - path: **\bin\release
+
