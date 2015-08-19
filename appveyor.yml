@@ -17,4 +17,4 @@ cache:
   - packages -> **\packages.config
 
 artifacts:
-  - path: '**\bin\release\*.*'
+  - path: '**\LogParser\bin\release\*.*'
