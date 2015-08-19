@@ -12,7 +12,7 @@ namespace LogParser.ViewModels
             set { }
         }
 
-        public DateTime Timestamp { get;  }
+        public DateTime Timestamp { get; set; }
         public int GroupId { get; set; }
 
         public LogEntry(DateTime timestamp, string line, int groupId)

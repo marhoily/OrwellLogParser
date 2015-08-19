@@ -6,7 +6,7 @@ namespace LogParser.ViewModels
 {
     public sealed class LogLine
     {
-        public List<string> Lines { get; }
+        public List<string> Lines { get; private set; }
         public string Line
         {
             get { return string.Join("\r\n", Lines); }

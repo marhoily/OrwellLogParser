@@ -8,7 +8,7 @@ namespace LogParser.ViewModels
 {
     public sealed class RawLog
     {
-        public List<LogLine> AllLines { get; }
+        public List<LogLine> AllLines { get; private set; }
         public int GroupsCount { get; private set; }
 
         public RawLog(FileInfo logFile)

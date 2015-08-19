@@ -16,10 +16,10 @@ namespace LogParser.ViewModels
             Groups = new List<int>();
             _filters = new List<Filter>
             {
-                Filter.S1(@"OnDisconnected"),
-                Filter.S2(@"Account is in active", x => "Account is in active collaboration: " + x.FromSubstringTillTheEndoOfLine("ConnectionId:")),
+                Filter.S1(@"OnDisconnected", x => "OnDisconnected: " + x.FromSubstringTillTheEndoOfLine("ConnectionId:")),
+                Filter.S1(@"Unknown error ConnectionId:", x => "Account is in active collaboration: " + x.FromSubstringTillTheEndoOfLine("ConnectionId:")),
                 Filter.S1(@"Started HubAgent\SubscribeCustomerAsync"),
-                Filter.S2(@"UpdatePresence Payload", x => x.RemoveAllBefore("UpdatePresence")),
+                Filter.S1(@"UpdatePresence Payload", x => x.RemoveAllBefore("UpdatePresence")),
                 Filter.S1(@"Started HubAgent\UnsubscribeCustomerAsync"),
                 Filter.S1(@"Started HubAgent\UnsubscribeEmployeeAsync")
             };
@@ -31,7 +31,7 @@ namespace LogParser.ViewModels
         }
 
         public List<LogEntry> FilteredLines { get; set; }
-        public List<int> Groups { get; }
+        public List<int> Groups { get; set; }
 
         public int SelectedGroup
         {

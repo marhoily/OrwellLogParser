@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:LogParser.ViewModels"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:io="clr-namespace:System.IO;assembly=mscorlib"
              mc:Ignorable="d"  FontSize="16"
              d:DesignHeight="300" d:DesignWidth="300" 
              d:DataContext="{d:DesignInstance viewModels:ShellViewModel}">
@@ -13,7 +14,13 @@
             <ColumnDefinition Width="35"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"/>
+        <ListBox ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type io:FileInfo}">
+                    <TextBlock Text="{Binding Name}" ToolTip ="{Binding FullName}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <ContentControl Grid.Column="1" 
                         x:Name="LogViewModel"
                         cal:Bind.Model="{Binding}"/>

@@ -12,7 +12,7 @@ namespace LogParser.ViewModels
             return new ContainStringFilter(str);
         }
 
-        public static Filter S2(string str, Func<string, string> convert)
+        public static Filter S1(string str, Func<string, string> convert)
         {
             return new ContainStringFilter2(str, convert);
         }
