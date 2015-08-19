@@ -74,10 +74,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Filter.cs" />
+    <Compile Include="Models\LogEntry.cs" />
     <Compile Include="ViewModels\LogLine.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
-    <Compile Include="ViewModels\RawLog.cs" />
+    <Compile Include="Models\RawLog.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Views\LogView.xaml.cs">
       <DependentUpon>LogView.xaml</DependentUpon>
     </Compile>

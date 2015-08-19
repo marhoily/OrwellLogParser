@@ -4,7 +4,7 @@ using System.Windows.Shapes;
 
 namespace LogParser.ViewModels
 {
-    public class LogLine
+    public sealed class LogLine
     {
         public List<string> Lines { get; }
         public string Line
@@ -14,7 +14,7 @@ namespace LogParser.ViewModels
         }
 
         public DateTime Timestamp { get; set; }
-        public int Group { get; set; }
+        public int GroupId { get; set; }
 
         public LogLine(string line)
         {

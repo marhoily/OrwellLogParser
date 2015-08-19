@@ -31,7 +31,7 @@ namespace LogParser.ViewModels
                 if (readAllLine.Timestamp - last > TimeSpan.FromMinutes(10))
                     currentGroup++;
                 last = readAllLine.Timestamp;
-                readAllLine.Group = currentGroup;
+                readAllLine.GroupId = currentGroup;
             }
             GroupsCount = currentGroup;
         }

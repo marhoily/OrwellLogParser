@@ -6,32 +6,31 @@ namespace LogParser.ViewModels
 {
     public sealed class LogViewModel : PropertyChangedBase
     {
+        private readonly List<Filter> _filters;
         private readonly RawLog _logFile;
+        private int _selectedGroup;
 
         public LogViewModel(RawLog logFile)
         {
             _logFile = logFile;
             Groups = new List<int>();
-            Filters = new List<string> { "OnDisconnected", "Account is in active", "Started HubAgent\\SubscribeCustomerAsync"/*, "UpdatePresence"*/ };
+            _filters = new List<Filter>
+            {
+                Filter.S1(@"OnDisconnected"),
+                Filter.S2(@"Account is in active", x => "Account is in active collaboration: " + x.FromSubstringTillTheEndoOfLine("ConnectionId:")),
+                Filter.S1(@"Started HubAgent\SubscribeCustomerAsync"),
+                Filter.S2(@"UpdatePresence Payload", x => x.RemoveAllBefore("UpdatePresence")),
+                Filter.S1(@"Started HubAgent\UnsubscribeCustomerAsync"),
+                Filter.S1(@"Started HubAgent\UnsubscribeEmployeeAsync")
+            };
 
             for (var i = 0; i < logFile.GroupsCount; i++)
                 Groups.Add(i);
 
-            Filter();
-
-        }
-        private void Filter()
-        {
-            FilteredLines = _logFile.AllLines
-                .Where(l => l.Group == SelectedGroup)
-                .Where(l => Filters.Any(f => Satisfies(l.Line, f)))
-                .ToList();
-            NotifyOfPropertyChange(() => FilteredLines);
+            DoFilter();
         }
 
-        // public override string DisplayName => "Shell Window";
-
-        public List<LogLine> FilteredLines { get; set; }
+        public List<LogEntry> FilteredLines { get; set; }
         public List<int> Groups { get; }
 
         public int SelectedGroup
@@ -40,16 +39,21 @@ namespace LogParser.ViewModels
             set
             {
                 _selectedGroup = value;
-                Filter();
+                DoFilter();
             }
         }
 
-        private static bool Satisfies(string line, string filter)
+        private void DoFilter()
         {
-            return line.Contains(filter);
+            FilteredLines = _logFile.AllLines
+                .Where(l => l.GroupId == SelectedGroup)
+                .Where(l => _filters.Any(f => f.Test(l.Line)))
+                .Select(l => new LogEntry(
+                    l.Timestamp,
+                    _filters.First(f => f.Test(l.Line)).Display(l.Line),
+                    l.GroupId))
+                .ToList();
+            NotifyOfPropertyChange(() => FilteredLines);
         }
-
-        public readonly List<string> Filters;
-        private int _selectedGroup;
     }
 }
