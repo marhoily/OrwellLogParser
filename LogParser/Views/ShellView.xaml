@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:LogParser.ViewModels"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d"  FontSize="16"
              d:DesignHeight="300" d:DesignWidth="300" 
              d:DataContext="{d:DesignInstance viewModels:ShellViewModel}">
@@ -12,12 +13,8 @@
             <ColumnDefinition Width="35"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}"/>
-        <DataGrid Grid.Column="1" ItemsSource="{Binding FilteredLines}" 
-               AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Line}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListBox ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"/>
+        <ContentControl Grid.Column="1" 
+                        cal:Bind.Model="{Binding LogViewModel}"/>
     </Grid>
 </Window>
