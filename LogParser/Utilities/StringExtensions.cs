@@ -1,6 +1,6 @@
 using System;
 
-namespace LogParser.ViewModels
+namespace LogParser.Utilities
 {
     public static class StringExtensions
     {

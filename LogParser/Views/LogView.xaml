@@ -4,10 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:LogParser.ViewModels"
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:utilities="clr-namespace:LogParser.Utilities"
         mc:Ignorable="d"
-        Title="LogView" Height="300" Width="300" 
+        Title="LogView" Height="300" Width="600" 
         d:DataContext="{d:DesignInstance viewModels:LogViewModel}">
-    <Grid Grid.Column="1" >
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -19,7 +21,20 @@
                 <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp, StringFormat=HH:mm:ss}"/>
                 <DataGridTextColumn Header="Line" Binding="{Binding Line}" Width="400"/>
                 <DataGridTextColumn Header="Level" Binding="{Binding Level}"/>
-                <DataGridTextColumn Header="Sid" Binding="{Binding Sid}"/>
+                <DataGridTextColumn Header="Sid" Binding="{Binding Sid}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu cal:Action.TargetWithoutContext="{Binding RelativeSource={RelativeSource Self},  Path=PlacementTarget.Column, Converter={x:Static utilities:GoToDataGridOwner_DataContext_FiltersView.Instance}}">
+                                        <MenuItem cal:Message.Attach="ExcludeSid($dataContext)"
+                                                  Header="Exclude Sid"/>
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Method" Binding="{Binding Method}"/>
                 <DataGridTextColumn Header="A" Binding="{Binding MethodAttr}"/>
             </DataGrid.Columns>

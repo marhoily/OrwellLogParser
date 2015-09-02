@@ -12,7 +12,7 @@ namespace LogParser.ViewModels
 
         public FiltersViewModel(RawLog logFile)
         {
-            LogView = new LogViewModel(logFile);
+            LogView = new LogViewModel(this, logFile);
             Groups = new List<int>();
             _filters = new List<Filter>
             {
@@ -31,6 +31,12 @@ namespace LogParser.ViewModels
             IoC.Get<IWindowManager>().ShowWindow(LogView);
         }
 
+        public void ExcludeSid(LogLine line)
+        {
+            var str = line.Sid;
+            _andFilters.Add(Filter.S1(l => l.Sid != str));
+            DoFilter();
+        }
         public LogViewModel LogView { get; private set; }
 
         public List<int> Groups { get; set; }

@@ -6,10 +6,12 @@ namespace LogParser.ViewModels
 {
     public sealed class LogViewModel : Screen
     {
+        public FiltersViewModel FiltersView { get; set; }
         private readonly RawLog _logFile;
 
-        public LogViewModel(RawLog logFile)
+        public LogViewModel(FiltersViewModel filtersView, RawLog logFile)
         {
+            FiltersView = filtersView;
             _logFile = logFile;
         }
 

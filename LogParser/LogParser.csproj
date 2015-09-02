@@ -73,6 +73,7 @@
     <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\LogEntry.cs" />
     <Compile Include="Models\RawLog.cs" />
+    <Compile Include="Utilities\GoToDataGridOwner_DataContext_FiltersView.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="ViewModels\EnterStringViewModel.cs" />
     <Compile Include="ViewModels\FiltersViewModel.cs" />
