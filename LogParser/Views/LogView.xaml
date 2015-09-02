@@ -14,16 +14,32 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ListBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}"/>
-        <DataGrid Grid.Column="1" ItemsSource="{Binding FilteredLines}" 
-               AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp, StringFormat=HH:mm:ss}"/>
-                <DataGridTextColumn Header="Line" Binding="{Binding Line}" Width="400"/>
-                <DataGridTextColumn Header="Level" Binding="{Binding Level}"/>
-                <DataGridTextColumn Header="Sid" Binding="{Binding Sid}"/>
-                <DataGridTextColumn Header="Method" Binding="{Binding Method}"/>
-                <DataGridTextColumn Header="A" Binding="{Binding MethodAttr}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="ExcludeSif" Content="ExcludeSif"
+                        Margin="3" Padding="15,2"/>
+            </StackPanel>
+            <DataGrid ItemsSource="{Binding FilteredLines}" 
+                      Grid.Row="1"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp, StringFormat=HH:mm:ss}"/>
+                    <DataGridTextColumn Header="Line" Binding="{Binding Line}" Width="400"/>
+                    <DataGridTextColumn Header="Level" Binding="{Binding Level}"/>
+                    <DataGridTextColumn Header="Sid" Binding="{Binding Sid}"/>
+                    <DataGridTextColumn Header="Method" Binding="{Binding Method}"/>
+                    <DataGridTextColumn Header="A" Binding="{Binding MethodAttr}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <TextBlock Text="Cout: "/>
+                <TextBlock Text="{Binding FilteredLines.Count}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

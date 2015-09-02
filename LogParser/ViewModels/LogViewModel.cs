@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using Caliburn.Micro;
 
 namespace LogParser.ViewModels
@@ -7,6 +8,7 @@ namespace LogParser.ViewModels
     public sealed class LogViewModel : PropertyChangedBase
     {
         private readonly List<Filter> _filters;
+        private readonly List<Filter> _andFilters = new List<Filter>();
         private readonly RawLog _logFile;
         private int _selectedGroup;
 
@@ -32,6 +34,24 @@ namespace LogParser.ViewModels
         public List<LogLine> FilteredLines { get; set; }
         public List<int> Groups { get; set; }
 
+        public void ExcludeSif()
+        {
+            var enterStringViewModel = new EnterStringViewModel();
+            if (IoC.Get<IWindowManager>().ShowDialog(enterStringViewModel) != true) return;
+            int result;
+            if (int.TryParse(enterStringViewModel.Value, out result))
+            {
+                var str = result.ToString();
+                _andFilters.Add(Filter.S1(l => l.Sid != str));
+                DoFilter();
+            }
+            else
+            {
+                MessageBox.Show("Int is expected!", "Invalid input",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         public int SelectedGroup
         {
             get { return _selectedGroup; }
@@ -47,7 +67,7 @@ namespace LogParser.ViewModels
             FilteredLines = _logFile.AllLines
                 .Where(l => l.GroupId == SelectedGroup)
                 .Where(l => _filters.Any(f => f.Test(l)))
-              //  .Select(l => new LogEntry(_filters.First(f => f.Test(l)).Display(l.Line), l))
+                .Where(l => _andFilters.All(f => f.Test(l)))
                 .ToList();
             NotifyOfPropertyChange(() => FilteredLines);
         }

@@ -1,0 +1,31 @@
+﻿<Window x:Class="LogParser.Views.EnterStringView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EnterStringView" Height="120" Width="300">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="76*"/>
+            <ColumnDefinition Width="217*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Value:" VerticalAlignment="Center"
+                   HorizontalAlignment="Right"/>
+        <TextBox x:Name="Value" VerticalAlignment="Center" 
+                 HorizontalAlignment="Center"
+                 MinWidth="200" Grid.Column="1"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal"
+                    HorizontalAlignment="Right" Grid.Column="1" Margin="0,0.333,0.333,-0.333">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Padding" Value="15,2"/>
+                    <Setter Property="Margin" Value="2"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button x:Name="Accept" Content="OK" IsDefault="True"/>
+            <Button x:Name="Cancel" Content="Cancel" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>
