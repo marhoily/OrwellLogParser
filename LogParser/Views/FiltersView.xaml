@@ -4,16 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:LogParser.ViewModels"
+             xmlns:models="clr-namespace:LogParser.Models"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" 
              d:DataContext="{d:DesignInstance viewModels:FiltersViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="35"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ListBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}"/>
-        <Grid Grid.Column="1" >
+        <StackPanel Grid.Column="1">
+            <StackPanel.Resources>
+                <DataTemplate DataType="{x:Type models:Filter}">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="X" Padding="4,0"
+                                cal:Message.Attach="RemoveFilter($dataContext)"
+                                cal:Action.TargetWithoutContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext}"/>
+                        <TextBlock Text="{Binding Name}" Margin="15,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </StackPanel.Resources>
+            <ListBox ItemsSource="{Binding Filters}" />
+            <ListBox ItemsSource="{Binding AndFilters}"/>
+        </StackPanel>
+        <Grid Grid.Column="2" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -23,7 +40,6 @@
                 <Button x:Name="ExcludeSif" Content="ExcludeSif"
                         Margin="3" Padding="15,2"/>
             </StackPanel>
-
         </Grid>
     </Grid>
 </UserControl>

@@ -1,4 +1,6 @@
-namespace LogParser.ViewModels
+using LogParser.ViewModels;
+
+namespace LogParser.Models
 {
     public sealed class LogEntry
     {

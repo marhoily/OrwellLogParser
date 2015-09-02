@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using LogParser.ViewModels;
 
-namespace LogParser.ViewModels
+namespace LogParser.Models
 {
     public sealed class RawLog
     {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Caliburn.Micro;
+using LogParser.Models;
 
 namespace LogParser.ViewModels
 {
