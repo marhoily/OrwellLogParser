@@ -20,6 +20,7 @@ namespace LogParser.ViewModels
 
             AllLines = GroupByNewLine(AllLines).ToList();
             GroupByTimestamp(AllLines);
+            GroupBySid(AllLines);
         }
 
         private void GroupByTimestamp(List<LogLine> readAllLines)
@@ -34,6 +35,18 @@ namespace LogParser.ViewModels
                 readAllLine.GroupId = currentGroup;
             }
             GroupsCount = currentGroup;
+        }
+        private void GroupBySid(List<LogLine> readAllLines)
+        {
+            var counter = 0;
+            foreach (var group in readAllLines.ToLookup(l => l.Sid, l => l))
+            {
+                counter++;
+                foreach (var logLine in group)
+                {
+                    logLine.Sid = counter.ToString();
+                }
+            }
         }
 
         private static IEnumerable<LogLine> GroupByNewLine(List<LogLine> readAllLines)
