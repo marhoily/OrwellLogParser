@@ -75,11 +75,15 @@
     <Compile Include="Models\RawLog.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="ViewModels\EnterStringViewModel.cs" />
+    <Compile Include="ViewModels\FiltersViewModel.cs" />
     <Compile Include="ViewModels\LogLine.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\EnterStringView.xaml.cs">
       <DependentUpon>EnterStringView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FiltersView.xaml.cs">
+      <DependentUpon>FiltersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LogView.xaml.cs">
       <DependentUpon>LogView.xaml</DependentUpon>
@@ -123,9 +127,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\LogView.xaml">
+    <Page Include="Views\FiltersView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShellView.xaml">
       <SubType>Designer</SubType>

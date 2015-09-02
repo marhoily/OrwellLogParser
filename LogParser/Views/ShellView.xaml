@@ -22,7 +22,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <ContentControl Grid.Column="1" 
-                        x:Name="LogViewModel"
+                        x:Name="FiltersViewModel"
                         cal:Bind.Model="{Binding}"/>
     </Grid>
 </Window>

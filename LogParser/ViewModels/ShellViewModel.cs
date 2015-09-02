@@ -23,12 +23,12 @@ namespace LogParser.ViewModels
             set
             {
                 _selectedFile = value;
-                LogViewModel = new LogViewModel(new RawLog(_selectedFile));
-                NotifyOfPropertyChange(() => LogViewModel);
+                FiltersViewModel = new FiltersViewModel(new RawLog(_selectedFile));
+                NotifyOfPropertyChange(() => FiltersViewModel);
             }
         }
 
-        public LogViewModel LogViewModel { get; set; }
+        public FiltersViewModel FiltersViewModel { get; set; }
       
     }
 }
