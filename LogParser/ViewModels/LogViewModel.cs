@@ -51,7 +51,7 @@ namespace LogParser.ViewModels
                 .Select(l => new LogEntry(
                     l.Timestamp,
                     _filters.First(f => f.Test(l.Line)).Display(l.Line),
-                    l.GroupId))
+                    l.GroupId, l))
                 .ToList();
             NotifyOfPropertyChange(() => FilteredLines);
         }

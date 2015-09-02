@@ -41,15 +41,53 @@ namespace LogParser.ViewModels
             var current = default(LogLine);
             foreach (var t in readAllLines)
             {
-                // <08/14/2015 11.24.01.663388>
-                var substring = t.Lines[0].Substring(1, 26);
+                // t:09/02/2015 12.45.58.970918;
+                var substring = t.Lines[0].Substring(2, 26);
                 DateTime value;
                 if (DateTime.TryParseExact(substring,
-                    "MM/dd/yyyy hh.mm.ss.ffffff",
+                    "MM/dd/yyyy HH.mm.ss.ffffff",
                     CultureInfo.InvariantCulture,
                     DateTimeStyles.AssumeUniversal,
                     out value))
                 {
+                    t.Lines[0] = t.Lines[0].Substring(30);
+                    if (t.Lines[0].StartsWith("Debug:"))
+                    {
+                        t.Lines[0] = t.Lines[0].Substring(7);
+                        t.Level = "Debug";
+                    }
+                    if (t.Lines[0].StartsWith("Error:"))
+                    {
+                        t.Lines[0] = t.Lines[0].Substring(7);
+                        t.Level = "Error";
+                    }
+                    if (t.Lines[0].StartsWith("s:"))
+                    {
+                        t.Sid = t.Lines[0].Substring(2, 36);
+                        t.Lines[0] = t.Lines[0].Substring(40);
+                    }
+                    if (t.Lines[0].StartsWith("m:"))
+                    {
+                        var idx = t.Lines[0].IndexOf(';');
+                        if (idx != -1)
+                        {
+                            t.Method = t.Lines[0].Substring(2, idx - 2);
+                            t.Lines[0] = t.Lines[0].Substring(idx + 2);
+                        }
+                    }
+                    if (t.Lines[0].StartsWith("a:"))
+                    {
+                        var idx = t.Lines[0].IndexOf(';');
+                        if (idx != -1)
+                        {
+                            t.MethodAttr = t.Lines[0].Substring(2, idx - 2);
+                            t.Lines[0] = t.Lines[0].Substring(idx + 2);
+                        }
+                    }
+                    if (t.Lines[0].StartsWith("data:"))
+                    {
+                        t.Lines[0] = t.Lines[0].Substring(7, t.Lines[0].Length - 9);
+                    }
                     if (current != null)
                         yield return current;
                     current = t;

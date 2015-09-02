@@ -9,7 +9,7 @@ namespace LogParser.ViewModels
 
         public ShellViewModel()
         {
-            var folder = @"C:\Users\ilm\Documents\bug #1";
+            var folder = @"C:\Users\ilm\Documents\MuMuLi";
             Files = new DirectoryInfo(folder)
                 .GetFiles("*.*", SearchOption.AllDirectories);
 

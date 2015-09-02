@@ -15,6 +15,10 @@ namespace LogParser.ViewModels
 
         public DateTime Timestamp { get; set; }
         public int GroupId { get; set; }
+        public string Level { get; set; }
+        public string Sid { get; set; }
+        public string Method { get; set; }
+        public string MethodAttr { get; set; }
 
         public LogLine(string line)
         {
