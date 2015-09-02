@@ -4,58 +4,31 @@ namespace LogParser.ViewModels
 {
     public abstract class Filter
     {
-        public abstract bool Test(string line);
+        public abstract bool Test(LogLine line);
         public abstract string Display(string line);
 
-        public static Filter S1(string str)
+        public static Filter S1(Func<LogLine, bool> predicate)
         {
-            return new ContainStringFilter(str);
+            return new DelefateFilter(predicate);
         }
 
-        public static Filter S1(string str, Func<string, string> convert)
+        private class DelefateFilter : Filter
         {
-            return new ContainStringFilter2(str, convert);
-        }
+            private readonly Func<LogLine, bool> _predicate;
 
-        public class ContainStringFilter : Filter
-        {
-            private readonly string _str;
-
-            public ContainStringFilter(string str)
+            public DelefateFilter(Func<LogLine, bool> predicate)
             {
-                _str = str;
+                _predicate = predicate;
             }
 
-            public override bool Test(string line)
+            public override bool Test(LogLine line)
             {
-                return line.Contains(_str);
+                return _predicate(line);
             }
 
             public override string Display(string line)
             {
-                return _str;
-            }
-        }
-
-        public class ContainStringFilter2 : Filter
-        {
-            private readonly string _str;
-            private readonly Func<string, string> _convert;
-
-            public ContainStringFilter2(string str, Func<string, string> convert)
-            {
-                _str = str;
-                _convert = convert;
-            }
-
-            public override bool Test(string line)
-            {
-                return line.Contains(_str);
-            }
-
-            public override string Display(string line)
-            {
-                return _convert(line);
+                return line;
             }
         }
     }

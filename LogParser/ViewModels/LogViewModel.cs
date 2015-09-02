@@ -16,12 +16,11 @@ namespace LogParser.ViewModels
             Groups = new List<int>();
             _filters = new List<Filter>
             {
-                Filter.S1(@"OnDisconnected", x => "OnDisconnected: " + x.FromSubstringTillTheEndoOfLine("ConnectionId:")),
-                Filter.S1(@"Unknown error ConnectionId:", x => "Account is in active collaboration: " + x.FromSubstringTillTheEndoOfLine("ConnectionId:")),
-                Filter.S1(@"Started HubAgent\SubscribeCustomerAsync"),
-                Filter.S1(@"UpdatePresence Payload", x => x.RemoveAllBefore("UpdatePresence")),
-                Filter.S1(@"Started HubAgent\UnsubscribeCustomerAsync"),
-                Filter.S1(@"Started HubAgent\UnsubscribeEmployeeAsync")
+                Filter.S1(x => x.Method == @"Hub-OnDisconnected" && x.MethodAttr == "start"),
+                Filter.S1(x => x.Method == @"HubAgent-SubscriptionDisconnected"),
+                Filter.S1(x => x.Method == @"HubAgent-Signal_Subscribed" && x.MethodAttr == "start"),
+                Filter.S1(x => x.Method == @"HubAgent-SubscribeCustomerAsync"),
+                Filter.S1(x => x.Line.Contains(@"Message:Account is in active collaboration")),
             };
 
             for (var i = 0; i < logFile.GroupsCount; i++)
@@ -30,7 +29,7 @@ namespace LogParser.ViewModels
             DoFilter();
         }
 
-        public List<LogEntry> FilteredLines { get; set; }
+        public List<LogLine> FilteredLines { get; set; }
         public List<int> Groups { get; set; }
 
         public int SelectedGroup
@@ -47,11 +46,8 @@ namespace LogParser.ViewModels
         {
             FilteredLines = _logFile.AllLines
                 .Where(l => l.GroupId == SelectedGroup)
-                .Where(l => _filters.Any(f => f.Test(l.Line)))
-                .Select(l => new LogEntry(
-                    l.Timestamp,
-                    _filters.First(f => f.Test(l.Line)).Display(l.Line),
-                    l.GroupId, l))
+                .Where(l => _filters.Any(f => f.Test(l)))
+              //  .Select(l => new LogEntry(_filters.First(f => f.Test(l)).Display(l.Line), l))
                 .ToList();
             NotifyOfPropertyChange(() => FilteredLines);
         }

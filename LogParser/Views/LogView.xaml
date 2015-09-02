@@ -17,12 +17,12 @@
         <DataGrid Grid.Column="1" ItemsSource="{Binding FilteredLines}" 
                AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Attrs.Timestamp, StringFormat=HH:mm:ss}"/>
-                <DataGridTextColumn Binding="{Binding Line}" Width="400"/>
-                <DataGridTextColumn Binding="{Binding Attrs.Level}"/>
-                <DataGridTextColumn Binding="{Binding Attrs.Sid}"/>
-                <DataGridTextColumn Binding="{Binding Attrs.Method}"/>
-                <DataGridTextColumn Binding="{Binding Attrs.MethodAttr}"/>
+                <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp, StringFormat=HH:mm:ss}"/>
+                <DataGridTextColumn Header="Line" Binding="{Binding Line}" Width="400"/>
+                <DataGridTextColumn Header="Level" Binding="{Binding Level}"/>
+                <DataGridTextColumn Header="Sid" Binding="{Binding Sid}"/>
+                <DataGridTextColumn Header="Method" Binding="{Binding Method}"/>
+                <DataGridTextColumn Header="A" Binding="{Binding MethodAttr}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

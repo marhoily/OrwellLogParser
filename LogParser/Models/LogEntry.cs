@@ -1,5 +1,3 @@
-using System;
-
 namespace LogParser.ViewModels
 {
     public sealed class LogEntry
@@ -14,7 +12,7 @@ namespace LogParser.ViewModels
 
         public LogLine Attrs { get; set; }
 
-        public LogEntry(DateTime timestamp, string line, int groupId, LogLine attrs)
+        public LogEntry(string line, LogLine attrs)
         {
             _line = line;
             Attrs = attrs;
